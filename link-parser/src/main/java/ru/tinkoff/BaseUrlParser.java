@@ -3,7 +3,7 @@ package ru.tinkoff;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class BaseUrlParser implements UrlParser{
+public abstract class BaseUrlParser implements UrlParser{
     UrlParser next;
     @Override
     public void setNext(UrlParser parser) {
@@ -17,7 +17,6 @@ public class BaseUrlParser implements UrlParser{
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            //return none
             throw new RuntimeException(e);
         }
         return parseUri(uri);

@@ -3,11 +3,11 @@ package ru.tinkoff;
 import java.net.URI;
 
 public final class GitHubUrlParser extends BaseUrlParser {
-    static final String host = "github.com";
+    private static final String HOST = "github.com";
 
     @Override
     public UrlParserResponse parseUri(URI uri) {
-        if (uri.getHost().equals(host)) {
+        if (uri.getHost().equals(HOST)) {
             String[] parsedLink = uri.getPath().split("/");
             String user = parsedLink[1];
             String repo = parsedLink[2];
@@ -18,5 +18,3 @@ public final class GitHubUrlParser extends BaseUrlParser {
     }
 }
 
-record GitHubResponse(String user, String repository) implements UrlParserResponse {
-}
