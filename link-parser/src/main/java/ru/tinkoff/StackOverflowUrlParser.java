@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class StackOverflowUrlParser extends BaseUrlParser {
     private static final String HOST = "stackoverflow.com";
-    static final Pattern regex = Pattern.compile("^/questions/(\\d+)/.*$");
+    private static final Pattern regex = Pattern.compile("^/questions/(\\d+)/.*$");
 
     @Override
     public UrlParserResponse parseUri(URI uri) {
