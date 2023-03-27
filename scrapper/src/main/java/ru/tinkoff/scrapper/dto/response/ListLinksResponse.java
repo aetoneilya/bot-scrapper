@@ -1,7 +1,6 @@
 package ru.tinkoff.scrapper.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
