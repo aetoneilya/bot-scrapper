@@ -17,7 +17,7 @@ public class StackOverflowClient {
 
     public StackOverflowResponse getStackOverflowResponse(String questionId) {
         return webClient.get()
-                .uri("/questions/{id}", questionId)
+                .uri("/questions/{id}?site=stackoverflow", questionId)
                 .retrieve()
                 .bodyToMono(StackOverflowResponse.class)
                 .block();
