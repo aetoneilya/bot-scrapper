@@ -1,4 +1,4 @@
-package ru.tinkoff.scrapper.dto.response;
+package ru.tinkoff.bot.dto.response;
 
 import java.util.List;
 

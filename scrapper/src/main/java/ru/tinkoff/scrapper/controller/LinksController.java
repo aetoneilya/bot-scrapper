@@ -7,26 +7,28 @@ import ru.tinkoff.scrapper.dto.request.RemoveLinkRequest;
 import ru.tinkoff.scrapper.dto.response.LinkResponse;
 import ru.tinkoff.scrapper.dto.response.ListLinksResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class LinksController implements LinksApi {
     @Override
     public ListLinksResponse linksGet(Long tgChatId) {
-        ListLinksResponse response = new ListLinksResponse();
-        response.addLinksItem(new LinkResponse(1L, "https://habr.com/ru/post/675716/"));
-        response.addLinksItem(new LinkResponse(2L, "https://somelink"));
-        response.addLinksItem(new LinkResponse(3L, "https://google.com"));
-        return response;
+        List<LinkResponse> listResponse = new ArrayList<>();
+
+        listResponse.add(new LinkResponse(1L, "https://habr.com/ru/post/675716/"));
+        listResponse.add(new LinkResponse(2L, "https://somelink"));
+        listResponse.add(new LinkResponse(3L, "https://google.com"));
+        return new ListLinksResponse(listResponse, listResponse.size());
     }
 
     @Override
     public LinkResponse linksPost(Long tgChatId, AddLinkRequest body) {
-        LinkResponse response = new LinkResponse(1L, body.getLink());
-        return response;
+        return new LinkResponse(1L, body.link());
     }
 
     @Override
     public LinkResponse linksDelete(Long tgChatId, RemoveLinkRequest body) {
-        LinkResponse response = new LinkResponse(tgChatId, body.getLink());
-        return response;
+        return new LinkResponse(tgChatId, body.link());
     }
 }
