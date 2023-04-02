@@ -5,6 +5,11 @@ scrapper:
     interval:
       10000
 
+clients:
+  base-url:
+    github: https://api.github.com
+    stackoverflow: https://api.stackexchange.com/2.3
+
 springdoc:
   api-docs:
     enables: true

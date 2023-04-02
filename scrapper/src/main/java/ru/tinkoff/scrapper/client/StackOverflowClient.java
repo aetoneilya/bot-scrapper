@@ -1,18 +1,16 @@
 package ru.tinkoff.scrapper.client;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.scrapper.dto.response.StackOverflowResponse;
 
+@Service
 public class StackOverflowClient {
-    private static final String baseUrl = "https://api.stackexchange.com/2.3";
     private final WebClient webClient;
 
-    public StackOverflowClient(String baseUrl ){
-        this.webClient = WebClient.builder().baseUrl(baseUrl).build();
-    }
-
-    public StackOverflowClient(){
-        this(baseUrl);
+    public StackOverflowClient(@Qualifier("stackoverflowClient")WebClient webClient ){
+        this.webClient = webClient;
     }
 
     public StackOverflowResponse getStackOverflowResponse(String questionId) {

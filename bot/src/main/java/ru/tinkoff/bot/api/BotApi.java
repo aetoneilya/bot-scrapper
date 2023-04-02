@@ -19,5 +19,4 @@ public interface BotApi {
             @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping(value = "/updates", consumes = {"application/json"})
     void updatesPost(@RequestBody UpdatesRequest request);
-
 }
