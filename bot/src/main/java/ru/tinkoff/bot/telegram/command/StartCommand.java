@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import ru.tinkoff.bot.client.scrapper.ScrapperClient;
+import ru.tinkoff.bot.client.scrapper.exception.ScrapperClientException;
 
 @RequiredArgsConstructor
 public class StartCommand implements Command {
@@ -22,7 +23,18 @@ public class StartCommand implements Command {
     @Override
     public SendMessage handle(Update update) {
         Long chatId = update.message().chat().id();
-        scrapperClient.addChat(chatId);
-        return new SendMessage(chatId, "You are registered! Add some github or stackoverflow links");
+
+        String replyMessage = "You are registered! Add some github or stackoverflow links";
+
+        try {
+            scrapperClient.addChat(chatId);
+        } catch (ScrapperClientException ex) {
+            replyMessage = ex.getMessage();
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+            replyMessage = "@#!@$ I'm broken!?> This is don't supposed to happen";
+        }
+
+        return new SendMessage(chatId, replyMessage);
     }
 }

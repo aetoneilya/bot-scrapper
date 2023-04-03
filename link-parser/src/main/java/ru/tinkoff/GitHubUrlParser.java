@@ -9,6 +9,7 @@ public final class GitHubUrlParser extends BaseUrlParser {
     public UrlParserResponse parseUri(URI uri) {
         if (uri.getHost().equals(HOST)) {
             String[] parsedLink = uri.getPath().split("/");
+            if (parsedLink.length < 3) return null;
             String user = parsedLink[1];
             String repo = parsedLink[2];
             return new GitHubResponse(user, repo);

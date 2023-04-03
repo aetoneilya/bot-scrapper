@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 @RestController
 public class LinksController implements LinksApi {
     private static final Logger log = Logger.getLogger(LinkUpdaterScheduler.class.getName());
+
     @Override
     public ListLinksResponse linksGet(Long tgChatId) {
         log.log(Level.INFO, "links get request");
@@ -29,13 +30,13 @@ public class LinksController implements LinksApi {
 
     @Override
     public LinkResponse linksPost(Long tgChatId, AddLinkRequest body) {
-        log.log(Level.INFO, "add link request");
+        log.log(Level.INFO, "add link request link: " + body.link() + " chatid: " + tgChatId);
         return new LinkResponse(1L, body.link());
     }
 
     @Override
     public LinkResponse linksDelete(Long tgChatId, RemoveLinkRequest body) {
-        log.log(Level.INFO, "remove link request");
+        log.log(Level.INFO, "remove link request " + body.link() + " chatid: " + tgChatId);
         return new LinkResponse(tgChatId, body.link());
     }
 }

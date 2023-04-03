@@ -32,18 +32,10 @@ public class Bot {
         });
     }
 
-    private SendMessage processUpdate(Update update) {
-        printUpdate(update);
+    public SendMessage processUpdate(Update update) {
         for (Command command : commands)
             if (command.supports(update)) return command.handle(update);
 
         return new SendMessage(update.message().chat().id(), "Unsupported command");
-    }
-
-    private void printUpdate(Update update) {
-        int updateId = update.updateId();
-        long chatId = update.message().chat().id();
-        String text = update.message().text();
-        System.out.printf("%s  TG_BOT  chatId=%d  updateId=%d  text=%s\n", OffsetDateTime.now(), chatId, updateId, text);
     }
 }
