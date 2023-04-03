@@ -2,8 +2,13 @@ package ru.tinkoff.bot.telegram.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import lombok.RequiredArgsConstructor;
+import ru.tinkoff.bot.client.scrapper.ScrapperClient;
 
-public class StartCommand  implements Command{
+@RequiredArgsConstructor
+public class StartCommand implements Command {
+    private final ScrapperClient scrapperClient;
+
     @Override
     public String command() {
         return "/start";
@@ -16,6 +21,8 @@ public class StartCommand  implements Command{
 
     @Override
     public SendMessage handle(Update update) {
-        return new SendMessage(update.message().chat().id(), "You are registered");
+        Long chatId = update.message().chat().id();
+        scrapperClient.addChat(chatId);
+        return new SendMessage(chatId, "You are registered! Add some github or stackoverflow links");
     }
 }

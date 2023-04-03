@@ -6,26 +6,18 @@ import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
-import ru.tinkoff.bot.telegram.command.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.tinkoff.bot.telegram.command.Command;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class Bot {
     private final TelegramBot bot;
     private final List<Command> commands;
-
-    public Bot(String token) {
-        bot = new TelegramBot(token);
-
-        commands = new ArrayList<>();
-        commands.add(new UntrackCommand());
-        commands.add(new TrackCommand());
-        commands.add(new StartCommand());
-        commands.add(new ListCommand());
-        commands.add(new HelpCommand(commands));
-    }
 
     public void start() {
         BotCommand[] menuCommand = new BotCommand[commands.size()];

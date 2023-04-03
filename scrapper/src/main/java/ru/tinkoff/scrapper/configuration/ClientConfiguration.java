@@ -21,7 +21,6 @@ public class ClientConfiguration {
 
     @Bean("stackoverflowClient")
     public WebClient getStackOverflowClient() {
-        System.out.println(stackOverflowBaseUrl);
         return WebClient.builder().baseUrl(stackOverflowBaseUrl).build();
     }
 }

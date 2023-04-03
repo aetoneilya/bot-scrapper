@@ -2,17 +2,20 @@ package ru.tinkoff.bot.telegram.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class HelpCommand implements Command {
 
     @Setter
     @Getter
     private String helpMessage = "default help message";
-
 
     public HelpCommand(List<Command> commands) {
         StringBuilder stringBuilder = new StringBuilder();

@@ -1,6 +1,10 @@
 bot:
-  test:
-    1
+  test: 1
+  telegram-token: ${TELEGRAM-TOKEN}
+  base-url-scrapper: http://localhost:8080
+
+server:
+  port: 8081
 
 springdoc:
   api-docs:

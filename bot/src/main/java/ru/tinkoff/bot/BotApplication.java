@@ -14,7 +14,6 @@ public class BotApplication {
         ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
         System.out.println(config);
 
-        Bot bot = new Bot("6150282267:AAF106wPxccAev5fxpFA3bfVyRQr8xTvXuA");
-        bot.start();
+        ctx.getBean(Bot.class).start();
     }
 }
