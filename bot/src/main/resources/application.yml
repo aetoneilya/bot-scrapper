@@ -1,0 +1,11 @@
+bot:
+  test:
+    1
+
+springdoc:
+  api-docs:
+    enables: true
+    path: /openapi/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
