@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: INIT_DB
+      author: aetoneilya
+      tagDatabase:
+        tag: INIT_DB
+  - include:
+      file: create-chat-table.sql
+      relativeToChangelogFile: true
+  - include:
+      file: create-link-table.sql
+      relativeToChangelogFile: true
