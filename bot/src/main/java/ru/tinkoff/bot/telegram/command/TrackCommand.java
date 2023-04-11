@@ -5,9 +5,11 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ForceReply;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.tinkoff.bot.client.scrapper.ScrapperClient;
 import ru.tinkoff.bot.client.scrapper.exception.ScrapperClientException;
 
+@Component
 @RequiredArgsConstructor
 public class TrackCommand implements Command {
     private static final String REPLY_TO_TEXT = "Send link as reply to this message to add it to tracked links";

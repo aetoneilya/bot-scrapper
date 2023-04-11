@@ -7,10 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 import ru.tinkoff.bot.client.scrapper.ScrapperClient;
-import ru.tinkoff.bot.telegram.command.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Validated
 @Configuration
@@ -31,16 +27,5 @@ public class BotConfig {
     @Bean
     ScrapperClient getScrapperClient() {
         return new ScrapperClient(baseUrlScrapper);
-    }
-
-    @Bean
-    List<Command> getCommands() {
-        List<Command> commands = new ArrayList<>();
-        commands.add(new UntrackCommand(getScrapperClient()));
-        commands.add(new TrackCommand(getScrapperClient()));
-        commands.add(new StartCommand(getScrapperClient()));
-        commands.add(new ListCommand(getScrapperClient()));
-        commands.add(new HelpCommand(commands));
-        return commands;
     }
 }
