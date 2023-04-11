@@ -4,23 +4,26 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@NoArgsConstructor
+@Component
 @AllArgsConstructor
 public class HelpCommand implements Command {
 
     @Setter
     @Getter
-    private String helpMessage = "default help message";
+    private String helpMessage;
 
+    @Autowired
     public HelpCommand(List<Command> commands) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Command command : commands)
             stringBuilder.append(command.command()).append(" ").append(command.description()).append("\n");
+        stringBuilder.append(command()).append(" ").append(description()).append("\n");
         helpMessage = stringBuilder.toString();
     }
 

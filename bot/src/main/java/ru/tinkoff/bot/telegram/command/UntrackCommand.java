@@ -5,9 +5,11 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ForceReply;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.tinkoff.bot.client.scrapper.ScrapperClient;
 import ru.tinkoff.bot.client.scrapper.exception.ScrapperClientException;
 
+@Component
 @RequiredArgsConstructor
 public class UntrackCommand implements Command {
     private final ScrapperClient scrapperClient;
