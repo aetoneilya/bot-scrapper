@@ -2,6 +2,7 @@ package ru.tinkoff.scrapper;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @SpringBootTest
 public class TestContainerInitializationTest extends IntegrationEnvironment {
-
+    @Autowired
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public TestContainerInitializationTest() {
@@ -58,7 +59,7 @@ public class TestContainerInitializationTest extends IntegrationEnvironment {
 
         addChat(user1);
         addChat(user2);
-        for (Link l : links){
+        for (Link l : links) {
             addLink(l);
         }
 

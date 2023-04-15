@@ -1,34 +1,73 @@
 package ru.tinkoff.scrapper.domain;
 
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.scrapper.IntegrationEnvironment;
+import ru.tinkoff.scrapper.domain.dto.Chat;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
-class JdbcTgChatRepositoryTest {
+public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcLinkRepository linkRepository;
     @Autowired
     private JdbcTgChatRepository chatRepository;
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
-    @Transactional
-    @Rollback
-    void addTest() {
+    //TODO: need to autowire this
+    public JdbcTgChatRepositoryTest() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setUrl(DB_CONTAINER.getJdbcUrl());
+        dataSource.setUsername(DB_CONTAINER.getUsername());
+        dataSource.setPassword(DB_CONTAINER.getPassword());
+
+        jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+        linkRepository = new JdbcLinkRepository(jdbcTemplate);
+        chatRepository = new JdbcTgChatRepository(jdbcTemplate);
     }
 
+    @Test
     @Transactional
     @Rollback
-    void removeTest() {
+    public void addFindTest() {
+        List<Chat> chats = new ArrayList<>();
+        chats.add(new Chat(1));
+        chats.add(new Chat(2));
+        chats.add(new Chat(3));
+
+        for (Chat chat : chats) {
+            chatRepository.add(chat);
+        }
+
+        Assertions.assertIterableEquals(chatRepository.findAll(), chats);
     }
 
+    @Test
     @Transactional
     @Rollback
-    void findAllTest() {
+    public void addRemoveFindTest() {
+        List<Chat> chats = new ArrayList<>();
+        chats.add(new Chat(1));
+        chats.add(new Chat(2));
+        chats.add(new Chat(3));
+
+        for (Chat chat : chats) {
+            chatRepository.add(chat);
+        }
+        chatRepository.remove(chats.get(0));
+        chats.remove(0);
+
+        Assertions.assertIterableEquals(chatRepository.findAll(), chats);
     }
 }

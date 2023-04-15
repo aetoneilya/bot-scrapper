@@ -10,6 +10,12 @@ clients:
     github: https://api.github.com
     stackoverflow: https://api.stackexchange.com/2.3
 
+spring:
+  datasource:
+    url: ${DB_URL}
+    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME}
+
 springdoc:
   api-docs:
     enables: true
