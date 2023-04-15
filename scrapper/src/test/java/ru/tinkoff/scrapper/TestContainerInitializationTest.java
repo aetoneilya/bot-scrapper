@@ -2,18 +2,20 @@ package ru.tinkoff.scrapper;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.scrapper.repository.dto.Chat;
-import ru.tinkoff.scrapper.repository.dto.Link;
+import ru.tinkoff.scrapper.domain.dto.Chat;
+import ru.tinkoff.scrapper.domain.dto.Link;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SpringBootTest
 public class TestContainerInitializationTest extends IntegrationEnvironment {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

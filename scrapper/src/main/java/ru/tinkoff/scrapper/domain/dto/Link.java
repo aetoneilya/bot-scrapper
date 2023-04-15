@@ -1,4 +1,4 @@
-package ru.tinkoff.scrapper.repository.dto;
+package ru.tinkoff.scrapper.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat {
+public class Link {
     int id;
+    String link;
+    Chat chat;
 }
