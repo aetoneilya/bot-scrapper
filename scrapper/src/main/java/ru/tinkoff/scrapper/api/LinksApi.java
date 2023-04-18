@@ -7,11 +7,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.scrapper.dto.request.AddLinkRequest;
-import ru.tinkoff.scrapper.dto.request.RemoveLinkRequest;
-import ru.tinkoff.scrapper.dto.response.ApiErrorResponse;
-import ru.tinkoff.scrapper.dto.response.LinkResponse;
-import ru.tinkoff.scrapper.dto.response.ListLinksResponse;
+import ru.tinkoff.scrapper.controller.dto.request.AddLinkRequest;
+import ru.tinkoff.scrapper.controller.dto.request.RemoveLinkRequest;
+import ru.tinkoff.scrapper.controller.dto.response.ApiErrorResponse;
+import ru.tinkoff.scrapper.controller.dto.response.LinkResponse;
+import ru.tinkoff.scrapper.controller.dto.response.ListLinksResponse;
 
 @Validated
 @Api(value = "links")

@@ -12,7 +12,7 @@ public final class GitHubUrlParser extends BaseUrlParser {
             if (parsedLink.length < 3) return null;
             String user = parsedLink[1];
             String repo = parsedLink[2];
-            return new GitHubResponse(user, repo);
+            return new GitHubLink(user, repo);
         } else {
             return super.parseUri(uri);
         }

@@ -1,14 +1,15 @@
 scrapper:
-  test:
-    1
+  test: 1
   scheduler:
-    interval:
-      10000
+    interval: 50000
+  update-frequency: 30
+
 
 clients:
   base-url:
     github: https://api.github.com
     stackoverflow: https://api.stackexchange.com/2.3
+    bot: http://localhost:8081
 
 spring:
   datasource:
@@ -18,7 +19,7 @@ spring:
 
 springdoc:
   api-docs:
-    enables: true
+    enabled: true
     path: /openapi/api-docs
   swagger-ui:
     enabled: true

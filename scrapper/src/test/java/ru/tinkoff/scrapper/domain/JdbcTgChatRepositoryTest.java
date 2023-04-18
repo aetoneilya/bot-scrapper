@@ -4,13 +4,14 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.IntegrationEnvironment;
 import ru.tinkoff.scrapper.domain.dto.Chat;
+import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
+import ru.tinkoff.scrapper.domain.jdbc.JdbcTgChatRepository;
 
 import java.util.ArrayList;
 import java.util.List;

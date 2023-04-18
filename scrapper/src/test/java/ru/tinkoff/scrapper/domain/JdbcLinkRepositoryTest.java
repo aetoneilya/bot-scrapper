@@ -1,7 +1,6 @@
 package ru.tinkoff.scrapper.domain;
 
 import org.junit.Test;
-
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,13 +9,17 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.IntegrationEnvironment;
+import ru.tinkoff.scrapper.ScrapperApplication;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
+import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
+import ru.tinkoff.scrapper.domain.jdbc.JdbcTgChatRepository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(classes = ScrapperApplication.class)
 public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTgChatRepository chatRepository;
@@ -43,22 +46,18 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void insertFindTest() {
         Chat user1 = new Chat(9999);
-        Chat user2 = new Chat(34234);
         List<Link> links = new ArrayList<>();
-        links.add(new Link(1, "stackoferflow.com", user1));
-        links.add(new Link(1, "github.com", user1));
-        links.add(new Link(1, "stackoferflow.com", user2));
+        links.add(new Link(1, "stackoferflow.com", user1, Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}"));
 
         chatRepository.add(user1);
-        chatRepository.add(user2);
         for (Link l : links) {
             linkRepository.add(l);
         }
 
-        List<Link> bdLinks = linkRepository.findAll();
+        List<Link> bdLinks = linkRepository.findAll(user1);
         Assertions.assertEquals(links.size(), bdLinks.size());
         for (int i = 0; i < links.size(); i++) {
-            Assertions.assertEquals(links.get(i).getLink(), bdLinks.get(i).getLink());
+            Assertions.assertEquals(links.get(i), bdLinks.get(i));
         }
     }
 

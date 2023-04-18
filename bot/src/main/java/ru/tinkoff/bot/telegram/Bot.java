@@ -42,4 +42,12 @@ public class Bot {
 
         return new SendMessage(update.message().chat().id(), "Unsupported command");
     }
+
+    public void updateRequest(List<Long> chats, String link, String description) {
+        for (Long chat : chats) {
+            String message = "New update for " + link + ":\n" + description;
+            SendMessage sendMessage = new SendMessage(chat, message);
+            bot.execute(sendMessage);
+        }
+    }
 }

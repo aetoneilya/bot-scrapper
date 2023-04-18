@@ -8,7 +8,7 @@ server:
 
 springdoc:
   api-docs:
-    enables: true
+    enabled: true
     path: /openapi/api-docs
   swagger-ui:
     enabled: true

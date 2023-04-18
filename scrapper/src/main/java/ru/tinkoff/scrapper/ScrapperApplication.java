@@ -4,8 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import ru.tinkoff.scrapper.configuration.ApplicationConfig;
-import ru.tinkoff.scrapper.domain.JdbcTgChatRepository;
-import ru.tinkoff.scrapper.domain.dto.Chat;
 
 
 @SpringBootApplication
