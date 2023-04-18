@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 public class Link {
     long id;
     String link;
-    Chat chat;
     Timestamp lastUpdate;
-    String jsonState;
+    String state;
 }

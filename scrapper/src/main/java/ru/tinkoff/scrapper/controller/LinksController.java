@@ -47,6 +47,7 @@ public class LinksController implements LinksApi {
     public LinkResponse linksDelete(Long tgChatId, RemoveLinkRequest body) {
         log.log(Level.INFO, "remove link request " + body.link() + " chatid: " + tgChatId);
         Link link = service.remove(tgChatId, body.link());
+        System.out.println(link);
         return new LinkResponse(link.getId(), URI.create(link.getLink()));
     }
 }

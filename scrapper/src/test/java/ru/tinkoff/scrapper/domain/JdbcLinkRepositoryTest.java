@@ -10,10 +10,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.IntegrationEnvironment;
 import ru.tinkoff.scrapper.ScrapperApplication;
-import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
-import ru.tinkoff.scrapper.domain.jdbc.JdbcTgChatRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ import java.util.List;
 
 @SpringBootTest(classes = ScrapperApplication.class)
 public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
-    @Autowired
-    private JdbcTgChatRepository chatRepository;
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
     @Autowired
@@ -38,23 +34,20 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
         linkRepository = new JdbcLinkRepository(jdbcTemplate);
-        chatRepository = new JdbcTgChatRepository(jdbcTemplate);
     }
 
     @Test
     @Transactional
     @Rollback
     public void insertFindTest() {
-        Chat user1 = new Chat(9999);
         List<Link> links = new ArrayList<>();
-        links.add(new Link(1, "stackoferflow.com", user1, Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}"));
+        links.add(new Link(1, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}"));
 
-        chatRepository.add(user1);
         for (Link l : links) {
             linkRepository.add(l);
         }
 
-        List<Link> bdLinks = linkRepository.findAll(user1);
+        List<Link> bdLinks = linkRepository.findAll();
         Assertions.assertEquals(links.size(), bdLinks.size());
         for (int i = 0; i < links.size(); i++) {
             Assertions.assertEquals(links.get(i), bdLinks.get(i));

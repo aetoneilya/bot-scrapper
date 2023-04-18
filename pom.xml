@@ -11,6 +11,7 @@
         <module>bot</module>
         <module>scrapper</module>
         <module>link-parser</module>
+        <module>scrapper-jooq</module>
     </modules>
 
     <properties>
