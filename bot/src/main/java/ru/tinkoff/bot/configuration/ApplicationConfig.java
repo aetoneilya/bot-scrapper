@@ -6,5 +6,5 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "bot", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test) {
+public record ApplicationConfig(@NotNull String test, @NotNull String telegramToken, @NotNull String baseUrlScrapper) {
 }

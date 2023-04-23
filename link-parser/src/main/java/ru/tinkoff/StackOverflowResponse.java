@@ -1,4 +1,4 @@
 package ru.tinkoff;
 
-public record StackOverflowResponse(int id) implements UrlParserResponse {
+public record StackOverflowResponse(Long id) implements UrlParserResponse {
 }

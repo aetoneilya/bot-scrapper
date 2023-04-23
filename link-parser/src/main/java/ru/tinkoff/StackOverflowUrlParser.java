@@ -12,7 +12,7 @@ public class StackOverflowUrlParser extends BaseUrlParser {
     public UrlParserResponse parseUri(URI uri) {
         if (uri.getHost().equals(HOST)) {
             Matcher matcher = regex.matcher(uri.getPath());
-            return matcher.matches() ? new StackOverflowResponse(Integer.parseInt(matcher.group(1))) : null;
+            return matcher.matches() ? new StackOverflowResponse(Long.parseLong(matcher.group(1))) : null;
         } else {
             return  super.parseUri(uri);
         }

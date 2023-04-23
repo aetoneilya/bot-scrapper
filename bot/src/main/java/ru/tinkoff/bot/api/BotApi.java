@@ -14,7 +14,7 @@ import ru.tinkoff.bot.dto.response.ApiErrorResponse;
 @Validated
 @Api(value = "Bot API")
 public interface BotApi {
-    @Operation(summary = "Получить все отслеживаемые ссылки", responses = {
+    @Operation(summary = "Отправить обновление", responses = {
             @ApiResponse(responseCode = "200", description = "Обновление обработано"),
             @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping(value = "/updates", consumes = {"application/json"})
