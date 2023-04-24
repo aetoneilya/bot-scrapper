@@ -1,9 +1,9 @@
-package ru.tinkoff.scrapper.service.jdbc;
+package ru.tinkoff.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import ru.tinkoff.scrapper.domain.dto.Link;
-import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
+import ru.tinkoff.scrapper.domain.jpa.JpaLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
 import ru.tinkoff.scrapper.service.Utilities;
 
@@ -11,15 +11,12 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class JdbcLinkUpdater implements LinkUpdater {
-
-    private final JdbcLinkRepository linkRepository;
+public class JpaLinkUpdater implements LinkUpdater {
+    private final JpaLinkRepository linkRepository;
     private final Utilities utilities;
 
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
-
-
     @Override
     public int update() {
         List<Link> oldLinks = linkRepository.findOlderThan(updateFrequency);
@@ -43,7 +40,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
     private void saveNewState(Link link, String newState) {
         link.setState(newState);
         link.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        linkRepository.update(link);
+        linkRepository.save(link);
     }
 
 }

@@ -3,7 +3,10 @@ scrapper:
   scheduler:
     interval: 50000
   update-frequency: 30
+  access-type: jdbc
 
+server:
+  port: 8082
 
 clients:
   base-url:
@@ -12,6 +15,12 @@ clients:
     bot: http://localhost:8081
 
 spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
   datasource:
     url: ${DB_URL}
     password: ${DB_PASSWORD}

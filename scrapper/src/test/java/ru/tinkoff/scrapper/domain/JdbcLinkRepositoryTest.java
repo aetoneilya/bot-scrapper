@@ -41,7 +41,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void insertFindTest() {
         List<Link> links = new ArrayList<>();
-        links.add(new Link(1, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}"));
+        links.add(new Link(1, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", null));
 
         for (Link l : links) {
             linkRepository.add(l);
