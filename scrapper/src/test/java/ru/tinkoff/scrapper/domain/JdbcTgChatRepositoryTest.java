@@ -43,9 +43,9 @@ public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void addFindTest() {
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1));
-        chats.add(new Chat(2));
-        chats.add(new Chat(3));
+        chats.add(new Chat(1, null));
+        chats.add(new Chat(2, null));
+        chats.add(new Chat(3, null));
 
         for (Chat chat : chats) {
             chatRepository.add(chat);
@@ -59,9 +59,9 @@ public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void addRemoveFindTest() {
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1));
-        chats.add(new Chat(2));
-        chats.add(new Chat(3));
+        chats.add(new Chat(1, null));
+        chats.add(new Chat(2, null));
+        chats.add(new Chat(3, null));
 
         for (Chat chat : chats) {
             chatRepository.add(chat);
