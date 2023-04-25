@@ -43,7 +43,7 @@ public class JdbcLinkService implements LinkService {
         }
 
         link = repository.add(link);
-        repository.addLinkToChat(new Chat(tgChatId), link);
+        repository.addLinkToChat(new Chat(tgChatId, null), link);
 
         return link;
     }
@@ -51,12 +51,12 @@ public class JdbcLinkService implements LinkService {
     @Override
     public Link remove(long tgChatId, URI url) {
         Link link = repository.getByUrl(url.toString());
-        repository.remove(new Chat(tgChatId), link);
+        repository.remove(new Chat(tgChatId, null), link);
         return link;
     }
 
     @Override
     public List<Link> listAll(long tgChatId) {
-        return repository.findAllByChat(new Chat(tgChatId));
+        return repository.findAllByChat(new Chat(tgChatId, null));
     }
 }

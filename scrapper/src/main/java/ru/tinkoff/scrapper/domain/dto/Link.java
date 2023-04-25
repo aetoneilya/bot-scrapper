@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,4 +16,5 @@ public class Link {
     String link;
     Timestamp lastUpdate;
     String state;
+    List<Chat> chats = new ArrayList<>();
 }
