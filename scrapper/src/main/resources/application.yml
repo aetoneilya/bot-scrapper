@@ -4,6 +4,8 @@ scrapper:
     interval: 50000
   update-frequency: 30
 
+server:
+  port: 8082
 
 clients:
   base-url:

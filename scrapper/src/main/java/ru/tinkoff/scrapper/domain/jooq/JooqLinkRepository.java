@@ -4,18 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.JSON;
 import org.jooq.RecordMapper;
+import org.jooq.types.DayToSecond;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jooq.tables.records.LinksRecord;
 
 import java.sql.Timestamp;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jooq.impl.DSL.currentTimestamp;
-import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.currentLocalDateTime;
+import static org.jooq.impl.DSL.localDateTimeAdd;
 import static ru.tinkoff.scrapper.domain.jooq.Tables.CHATS_TO_LINKS;
 import static ru.tinkoff.scrapper.domain.jooq.tables.Links.LINKS;
 
@@ -24,7 +24,7 @@ import static ru.tinkoff.scrapper.domain.jooq.tables.Links.LINKS;
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext dsl;
-    private final RecordMapper<LinksRecord, Link> recordMapper = record -> new Link(
+    private static final RecordMapper<LinksRecord, Link> recordMapper = record -> new Link(
             record.getId(),
             record.getLink(),
             Timestamp.valueOf(record.getLastUpdate()),
@@ -32,13 +32,13 @@ public class JooqLinkRepository {
             new ArrayList<>());
 
 
-    public Link add(Link link) {
-        return dsl.insertInto(LINKS)
+    public Long add(Link link) {
+        dsl.insertInto(LINKS)
                 .set(LINKS.LINK, link.getLink())
                 .set(LINKS.LAST_UPDATE, link.getLastUpdate().toLocalDateTime())
                 .set(LINKS.STATE, JSON.json(link.getState()))
-                .onConflictDoNothing().returning(LINKS.ID).fetchOne()
-                .map(record -> recordMapper.map((LinksRecord) record));
+                .onConflictDoNothing().execute();
+        return dsl.lastID().longValue();
     }
 
     public Link getByUrl(String url) {
@@ -67,14 +67,15 @@ public class JooqLinkRepository {
     }
 
     public List<Link> findAll() {
-        return dsl.select(LINKS).fetch()
-                .map(record -> recordMapper.map((LinksRecord) record));
+        return dsl.selectFrom(LINKS).fetch(recordMapper);
     }
 
     public List<Link> findOlderThan(int minutes) {
-        return dsl.select().from(LINKS).where(currentTimestamp().minus(LINKS.LAST_UPDATE)
-                        .greaterThan((Timestamp) val(Duration.ofMinutes(minutes).toMillis()))).fetch()
-                .map(record -> recordMapper.map((LinksRecord) record));
+
+
+        return dsl.select().from(LINKS)
+                .where(LINKS.LAST_UPDATE.lessThan(localDateTimeAdd(currentLocalDateTime(), new DayToSecond(0,0, minutes).neg())))
+                .fetch().map(record -> recordMapper.map((LinksRecord) record));
     }
 
     public int addLinkToChat(Chat chat, Link link) {

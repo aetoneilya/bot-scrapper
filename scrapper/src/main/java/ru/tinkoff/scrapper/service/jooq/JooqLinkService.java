@@ -38,7 +38,7 @@ public class JooqLinkService implements LinkService {
             case null -> throw new RuntimeException("Unsupported link");
         }
 
-        link = repository.add(link);
+        link.setId(repository.add(link));
         repository.addLinkToChat(new Chat(tgChatId, null), link);
 
         return link;
