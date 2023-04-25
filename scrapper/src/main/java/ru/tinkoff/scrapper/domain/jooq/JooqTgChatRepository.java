@@ -2,12 +2,14 @@ package ru.tinkoff.scrapper.domain.jooq;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
+import org.springframework.stereotype.Repository;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 
 import java.util.List;
 
 import static ru.tinkoff.scrapper.domain.jooq.tables.Chats.CHATS;
 
+@Repository
 @RequiredArgsConstructor
 public class JooqTgChatRepository {
     private final DSLContext dsl;
