@@ -74,8 +74,8 @@ public class JdbcLinkRepository {
                         .addValue("linkId", link.getId()));
     }
 
-    public List<Long> getChatIds(Link link) {
-        return jdbcTemplate.query("select chat_id from chats_to_links where link_id = :link_id",
-                new MapSqlParameterSource().addValue("linkId", link.getId()), new DataClassRowMapper<>(Long.class));
+    public List<Chat> getChats(Link link) {
+        return jdbcTemplate.query("select * from chats join chats_to_links ctl on chats.id = ctl.chat_id where link_id = :linkId",
+                new MapSqlParameterSource().addValue("linkId", link.getId()), new DataClassRowMapper<>(Chat.class));
     }
 }

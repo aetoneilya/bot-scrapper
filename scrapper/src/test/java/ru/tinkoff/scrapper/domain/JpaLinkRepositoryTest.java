@@ -8,16 +8,16 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.IntegrationEnvironment;
 import ru.tinkoff.scrapper.domain.dto.Link;
-import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
+import ru.tinkoff.scrapper.domain.jpa.JpaLinkRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
+public class JpaLinkRepositoryTest extends IntegrationEnvironment {
     @Autowired
-    private JdbcLinkRepository linkRepository;
+    private JpaLinkRepository linkRepository;
 
     @Test
     @Transactional
@@ -26,9 +26,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         List<Link> links = new ArrayList<>();
         links.add(new Link(1, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", new ArrayList<>()));
 
-        for (Link l : links) {
-            linkRepository.add(l);
-        }
+        linkRepository.saveAll(links);
 
         List<Link> bdLinks = linkRepository.findAll();
         Assertions.assertEquals(links.size(), bdLinks.size());
@@ -36,5 +34,4 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
             Assertions.assertEquals(links.get(i), bdLinks.get(i));
         }
     }
-
 }

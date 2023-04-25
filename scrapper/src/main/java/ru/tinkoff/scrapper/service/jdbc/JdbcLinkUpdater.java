@@ -36,8 +36,8 @@ public class JdbcLinkUpdater implements LinkUpdater {
     }
 
     private void sendUpdate(Link link, String newState) {
-//        List<Long> chats = linkRepository.getChatIds(link);
-//        utilities.sendUpdateToBot(chats, link, newState);
+        link.setChats(linkRepository.getChats(link));
+        utilities.sendUpdateToBot(link, newState);
     }
 
     private void saveNewState(Link link, String newState) {

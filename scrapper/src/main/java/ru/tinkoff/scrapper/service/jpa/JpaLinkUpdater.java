@@ -33,8 +33,7 @@ public class JpaLinkUpdater implements LinkUpdater {
     }
 
     private void sendUpdate(Link link, String newState) {
-//        List<Long> chats = linkRepository.getChatIds(link);
-//        utilities.sendUpdateToBot(chats, link, newState);
+        utilities.sendUpdateToBot(link, newState);
     }
 
     private void saveNewState(Link link, String newState) {

@@ -11,10 +11,12 @@ import ru.tinkoff.scrapper.client.github.GitHubClient;
 import ru.tinkoff.scrapper.client.stackoverflow.StackOverflowClient;
 import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
 import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
+import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,8 @@ public class Utilities {
         return link;
     }
 
-    public void sendUpdateToBot(List<Long> chats, Link link, String description) {
+    public void sendUpdateToBot(Link link, String description) {
+        List<Long> chats = link.getChats().stream().map(Chat::getId).collect(Collectors.toList());
         UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
         telegramBotClient.update(request);
     }

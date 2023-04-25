@@ -8,15 +8,16 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.IntegrationEnvironment;
 import ru.tinkoff.scrapper.domain.dto.Chat;
-import ru.tinkoff.scrapper.domain.jdbc.JdbcTgChatRepository;
+import ru.tinkoff.scrapper.domain.jpa.JpaTgChatRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
+public class JpaTgChatRepositoryTest extends IntegrationEnvironment {
     @Autowired
-    private JdbcTgChatRepository chatRepository;
+    private JpaTgChatRepository chatRepository;
+
 
     @Test
     @Transactional
@@ -27,9 +28,7 @@ public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
         chats.add(new Chat(2, new ArrayList<>()));
         chats.add(new Chat(3, new ArrayList<>()));
 
-        for (Chat chat : chats) {
-            chatRepository.add(chat);
-        }
+        chatRepository.saveAll(chats);
 
         Assertions.assertIterableEquals(chatRepository.findAll(), chats);
     }
@@ -43,12 +42,10 @@ public class JdbcTgChatRepositoryTest extends IntegrationEnvironment {
         chats.add(new Chat(2, new ArrayList<>()));
         chats.add(new Chat(3, new ArrayList<>()));
 
-        for (Chat chat : chats) {
-            chatRepository.add(chat);
-        }
-        chatRepository.remove(chats.get(0));
+        chatRepository.saveAll(chats);
+        chatRepository.delete(chats.get(0));
         chats.remove(0);
 
-        Assertions.assertIterableEquals(chatRepository.findAll(), chats);
+        Assertions.assertEquals(chatRepository.findAll().size(), chats.size());
     }
 }

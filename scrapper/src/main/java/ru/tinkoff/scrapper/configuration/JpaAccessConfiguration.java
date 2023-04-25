@@ -14,7 +14,7 @@ import ru.tinkoff.scrapper.service.jpa.JpaLinkUpdater;
 import ru.tinkoff.scrapper.service.jpa.JpaTgChatService;
 
 @Configuration
-@ConditionalOnProperty(prefix = "scrapper", name = "access-type", havingValue = "jdbc")
+@ConditionalOnProperty(prefix = "scrapper", name = "access-type", havingValue = "jpa")
 public class JpaAccessConfiguration {
     @Bean
     public LinkService linkService(JpaLinkRepository linkRepository, JpaTgChatRepository chatRepository, Utilities utilities) {
