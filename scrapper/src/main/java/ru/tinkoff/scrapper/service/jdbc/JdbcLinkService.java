@@ -2,7 +2,6 @@ package ru.tinkoff.scrapper.service.jdbc;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.GitHubLink;
 import ru.tinkoff.StackOverflowLink;
@@ -18,7 +17,7 @@ import java.net.URI;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
 

@@ -3,7 +3,6 @@ package ru.tinkoff.scrapper.service.jdbc;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.GitHubLink;
 import ru.tinkoff.StackOverflowLink;
 import ru.tinkoff.UrlParser;
@@ -18,7 +17,7 @@ import ru.tinkoff.scrapper.service.LinkUpdater;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 public class JdbcLinkUpdater implements LinkUpdater {
 
