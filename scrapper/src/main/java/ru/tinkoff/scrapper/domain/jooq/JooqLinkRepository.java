@@ -11,6 +11,7 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jooq.tables.records.LinksRecord;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,7 @@ public class JooqLinkRepository {
     }
 
     public Link getByUrl(String url) {
-        return dsl.select(LINKS).where(LINKS.LINK.eq(url)).fetchOne()
-                .map(record -> recordMapper.map((LinksRecord) record));
+        return dsl.selectFrom(LINKS).where(LINKS.LINK.eq(url)).fetchOne(recordMapper);
     }
 
     public int update(Link link) {
@@ -61,9 +61,15 @@ public class JooqLinkRepository {
     }
 
     public List<Link> findAllByChat(Chat chat) {
-        return dsl.select().from(CHATS_TO_LINKS).join(LINKS).on(LINKS.ID.eq(CHATS_TO_LINKS.LINK_ID))
+        return dsl.select(LINKS.ID, LINKS.LINK, LINKS.LAST_UPDATE, LINKS.STATE).from(CHATS_TO_LINKS).join(LINKS).on(LINKS.ID.eq(CHATS_TO_LINKS.LINK_ID))
                 .where(CHATS_TO_LINKS.CHAT_ID.eq((int) chat.getId())).fetch()
-                .map(record -> recordMapper.map((LinksRecord) record));
+                .map(record -> new Link(
+                        record.get(LINKS.ID, Long.class),
+                        record.get(LINKS.LINK, String.class),
+                        Timestamp.valueOf(record.get(LINKS.LAST_UPDATE, LocalDateTime.class)),
+                        record.get(LINKS.STATE, JSON.class).toString(),
+                        new ArrayList<>()
+                ));
     }
 
     public List<Link> findAll() {
@@ -71,11 +77,9 @@ public class JooqLinkRepository {
     }
 
     public List<Link> findOlderThan(int minutes) {
-
-
-        return dsl.select().from(LINKS)
+        return dsl.selectFrom(LINKS)
                 .where(LINKS.LAST_UPDATE.lessThan(localDateTimeAdd(currentLocalDateTime(), new DayToSecond(0,0, minutes).neg())))
-                .fetch().map(record -> recordMapper.map((LinksRecord) record));
+                .fetch().map(recordMapper);
     }
 
     public int addLinkToChat(Chat chat, Link link) {
@@ -86,7 +90,7 @@ public class JooqLinkRepository {
     }
 
     public List<Long> getChatIds(Link link) {
-        return dsl.select(CHATS_TO_LINKS)
+        return dsl.selectFrom(CHATS_TO_LINKS)
                 .where(CHATS_TO_LINKS.LINK_ID.eq((int) link.getId()))
                 .fetch(CHATS_TO_LINKS.CHAT_ID, Long.class);
     }
