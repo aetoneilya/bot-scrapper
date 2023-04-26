@@ -10,7 +10,7 @@ import ru.tinkoff.scrapper.domain.dto.Chat;
 
 import java.util.List;
 
-@Repository
+//@Repository
 @RequiredArgsConstructor
 public class JdbcTgChatRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;

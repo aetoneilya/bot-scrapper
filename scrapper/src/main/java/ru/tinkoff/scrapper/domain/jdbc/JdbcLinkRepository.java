@@ -12,7 +12,7 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 
 import java.util.List;
 
-@Repository
+//@Repository
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
