@@ -89,7 +89,7 @@ public class JooqLinkRepository {
                 .execute();
     }
 
-    public List<Long> getChatIds(Link link) {
+    public List<Long> getChatsIds(Link link) {
         return dsl.selectFrom(CHATS_TO_LINKS)
                 .where(CHATS_TO_LINKS.LINK_ID.eq((int) link.getId()))
                 .fetch(CHATS_TO_LINKS.CHAT_ID, Long.class);
