@@ -8,8 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.tinkoff.bot.dto.request.UpdatesRequest;
-import ru.tinkoff.bot.dto.response.ApiErrorResponse;
+import ru.tinkoff.bot.controller.dto.request.UpdatesRequest;
+import ru.tinkoff.bot.controller.dto.response.ApiErrorResponse;
 
 @Validated
 @Api(value = "Bot API")

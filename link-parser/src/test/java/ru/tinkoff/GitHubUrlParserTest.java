@@ -13,8 +13,8 @@ public class GitHubUrlParserTest {
 
         UrlParserResponse response = urlParser.parse(link);
 
-        assertInstanceOf(GitHubResponse.class, response);
-        GitHubResponse gitHubResponse = (GitHubResponse) response;
+        assertInstanceOf(GitHubLink.class, response);
+        GitHubLink gitHubResponse = (GitHubLink) response;
         assertEquals(gitHubResponse.repository(), "java-telegram-bot-api");
         assertEquals(gitHubResponse.user(), "pengrad");
     }
@@ -34,8 +34,8 @@ public class GitHubUrlParserTest {
 
         UrlParserResponse response = urlParser.parse(link);
 
-        assertInstanceOf(GitHubResponse.class, response);
-        GitHubResponse gitHubResponse = (GitHubResponse) response;
+        assertInstanceOf(GitHubLink.class, response);
+        GitHubLink gitHubResponse = (GitHubLink) response;
         assertEquals(gitHubResponse.repository(), "java-telegram-bot-api");
         assertEquals(gitHubResponse.user(), "pengrad");
     }

@@ -13,8 +13,8 @@ public class StackOverflowUrlParserTest {
 
         UrlParserResponse response = urlParser.parse(link);
 
-        assertInstanceOf(StackOverflowResponse.class, response);
-        StackOverflowResponse gitHubResponse = (StackOverflowResponse) response;
+        assertInstanceOf(StackOverflowLink.class, response);
+        StackOverflowLink gitHubResponse = (StackOverflowLink) response;
         assertEquals(44593066L, gitHubResponse.id());
     }
     @Test
@@ -32,8 +32,8 @@ public class StackOverflowUrlParserTest {
 
         UrlParserResponse response = urlParser.parse(link);
 
-        assertInstanceOf(StackOverflowResponse.class, response);
-        StackOverflowResponse gitHubResponse = (StackOverflowResponse) response;
+        assertInstanceOf(StackOverflowLink.class, response);
+        StackOverflowLink gitHubResponse = (StackOverflowLink) response;
         assertEquals(44593066L, gitHubResponse.id());
     }
     @Test

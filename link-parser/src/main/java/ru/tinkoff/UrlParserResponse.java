@@ -1,4 +1,4 @@
 package ru.tinkoff;
 
-public sealed interface UrlParserResponse permits GitHubResponse, StackOverflowResponse {
+public sealed interface UrlParserResponse permits GitHubLink, StackOverflowLink {
 }

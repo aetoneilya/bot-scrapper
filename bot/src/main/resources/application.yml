@@ -1,14 +1,14 @@
 bot:
   test: 1
   telegram-token: ${TELEGRAM-TOKEN}
-  base-url-scrapper: http://localhost:8080
+  base-url-scrapper: http://localhost:8082
 
 server:
   port: 8081
 
 springdoc:
   api-docs:
-    enables: true
+    enabled: true
     path: /openapi/api-docs
   swagger-ui:
     enabled: true
