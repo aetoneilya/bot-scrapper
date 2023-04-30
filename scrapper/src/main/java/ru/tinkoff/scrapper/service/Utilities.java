@@ -9,10 +9,10 @@ import ru.tinkoff.StackOverflowLink;
 import ru.tinkoff.UrlParser;
 import ru.tinkoff.scrapper.client.github.GitHubClient;
 import ru.tinkoff.scrapper.client.stackoverflow.StackOverflowClient;
-import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
 import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
+import ru.tinkoff.scrapper.service.updatesender.UpdateSender;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Utilities {
     private final GitHubClient gitHubClient;
-    private final TelegramBotClient telegramBotClient;
     private final StackOverflowClient stackOverflowClient;
     private final UrlParser urlParser;
     private final Gson gson;
+    private final UpdateSender sender;
 
     public Link createLink(String url) {
         Link link = new Link();
@@ -39,7 +39,7 @@ public class Utilities {
     public void sendUpdateToBot(Link link, String description) {
         List<Long> chats = link.getChats().stream().map(Chat::getId).collect(Collectors.toList());
         UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
-        telegramBotClient.update(request);
+        sender.send(request);
     }
 
     public String getNewState(@NotNull Link link) {

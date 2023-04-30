@@ -44,6 +44,7 @@ public class Bot {
     }
 
     public void updateRequest(List<Long> chats, String link, String description) {
+        System.out.println(description);
         for (Long chat : chats) {
             String message = "New update for " + link + ":\n" + description;
             SendMessage sendMessage = new SendMessage(chat, message);
