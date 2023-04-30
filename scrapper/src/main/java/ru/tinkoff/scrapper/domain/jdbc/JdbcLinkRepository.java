@@ -12,7 +12,7 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 
 import java.util.List;
 
-//@Repository
+@Repository
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -29,9 +29,10 @@ public class JdbcLinkRepository {
     }
 
     public Link getByUrl(String url) {
-        return jdbcTemplate.queryForObject("select * from links where link = :link",
+        List<Link> links = jdbcTemplate.query("select * from links where link = :link",
                 new MapSqlParameterSource().addValue("link", url),
                 rowMapper);
+        return links.size() > 0 ? links.get(0) : null;
     }
 
     public int update(Link link) {

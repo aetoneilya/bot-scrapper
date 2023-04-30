@@ -2,7 +2,6 @@ package ru.tinkoff.scrapper.service.jooq;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
@@ -12,7 +11,6 @@ import ru.tinkoff.scrapper.service.Utilities;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JooqLinkUpdater implements LinkUpdater {
     private final JooqLinkRepository linkRepository;

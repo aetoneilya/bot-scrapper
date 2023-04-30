@@ -16,7 +16,7 @@ import java.util.List;
 public class Chat {
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "chats_to_links",

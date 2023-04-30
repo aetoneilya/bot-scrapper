@@ -26,7 +26,7 @@ import static ru.tinkoff.scrapper.domain.jooq.tables.Links.LINKS;
 public class JooqLinkRepository {
     private final DSLContext dsl;
     private static final RecordMapper<LinksRecord, Link> recordMapper = record -> new Link(
-            record.getId(),
+            Long.valueOf(record.getId()),
             record.getLink(),
             Timestamp.valueOf(record.getLastUpdate()),
             record.getState().toString(),
@@ -51,18 +51,18 @@ public class JooqLinkRepository {
                 .set(LINKS.LINK, link.getLink())
                 .set(LINKS.LAST_UPDATE, link.getLastUpdate().toLocalDateTime())
                 .set(LINKS.STATE, JSON.json(link.getState()))
-                .where(LINKS.ID.eq((int) link.getId())).execute();
+                .where(LINKS.ID.eq(link.getId().intValue())).execute();
     }
 
     public int remove(Chat chat, Link link) {
         return dsl.delete(CHATS_TO_LINKS)
-                .where(CHATS_TO_LINKS.LINK_ID.eq((int) link.getId()))
-                .and(CHATS_TO_LINKS.CHAT_ID.eq((int) chat.getId())).execute();
+                .where(CHATS_TO_LINKS.LINK_ID.eq(link.getId().intValue()))
+                .and(CHATS_TO_LINKS.CHAT_ID.eq(chat.getId().intValue())).execute();
     }
 
     public List<Link> findAllByChat(Chat chat) {
         return dsl.select(LINKS.ID, LINKS.LINK, LINKS.LAST_UPDATE, LINKS.STATE).from(CHATS_TO_LINKS).join(LINKS).on(LINKS.ID.eq(CHATS_TO_LINKS.LINK_ID))
-                .where(CHATS_TO_LINKS.CHAT_ID.eq((int) chat.getId())).fetch()
+                .where(CHATS_TO_LINKS.CHAT_ID.eq(chat.getId().intValue())).fetch()
                 .map(record -> new Link(
                         record.get(LINKS.ID, Long.class),
                         record.get(LINKS.LINK, String.class),
@@ -84,14 +84,14 @@ public class JooqLinkRepository {
 
     public int addLinkToChat(Chat chat, Link link) {
         return dsl.insertInto(CHATS_TO_LINKS)
-                .set(CHATS_TO_LINKS.CHAT_ID, (int) chat.getId())
-                .set(CHATS_TO_LINKS.LINK_ID, (int) link.getId()).onConflictDoNothing()
+                .set(CHATS_TO_LINKS.CHAT_ID, chat.getId().intValue())
+                .set(CHATS_TO_LINKS.LINK_ID, link.getId().intValue()).onConflictDoNothing()
                 .execute();
     }
 
     public List<Long> getChatsIds(Link link) {
         return dsl.selectFrom(CHATS_TO_LINKS)
-                .where(CHATS_TO_LINKS.LINK_ID.eq((int) link.getId()))
+                .where(CHATS_TO_LINKS.LINK_ID.eq(link.getId().intValue()))
                 .fetch(CHATS_TO_LINKS.CHAT_ID, Long.class);
     }
 }

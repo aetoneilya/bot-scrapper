@@ -23,7 +23,7 @@ public class Link {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "link_seq")
     @SequenceGenerator(name = "link_seq", sequenceName = "link_seq", allocationSize = 1)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "link")
     private String link;

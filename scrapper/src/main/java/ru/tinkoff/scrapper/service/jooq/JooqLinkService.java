@@ -1,7 +1,6 @@
 package ru.tinkoff.scrapper.service.jooq;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
@@ -11,7 +10,6 @@ import ru.tinkoff.scrapper.service.Utilities;
 import java.net.URI;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JooqLinkService implements LinkService {
     private final JooqLinkRepository repository;

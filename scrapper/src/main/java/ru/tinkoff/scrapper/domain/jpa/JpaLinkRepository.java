@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface JpaLinkRepository extends JpaRepository<Link, Long> {
     Optional<Link> findByLink(String link);
 
-    @Query(value = "select *, now() - last_update from links where (now() - last_update) > (:interval * interval '1 minute')", nativeQuery = true)
+    @Query(value = "select * from links where (now() - last_update) > (:interval * interval '1 minute')", nativeQuery = true)
     List<Link> findOlderThan(@Param("interval") int minutes);
 }
