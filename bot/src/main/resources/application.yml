@@ -8,6 +8,7 @@ server:
 
 rabbit:
   queue-name: "update-notify-queue"
+  exchange-name: "update-notify-exchange"
 
 springdoc:
   api-docs:
