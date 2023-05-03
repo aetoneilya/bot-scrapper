@@ -9,6 +9,7 @@ server:
 rabbit:
   queue-name: "update-notify-queue"
   exchange-name: "update-notify-exchange"
+  routing-key: "update_request"
 
 springdoc:
   api-docs:

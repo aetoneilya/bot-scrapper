@@ -19,6 +19,8 @@ public class RabbitmqConfiguration {
     String queueName;
     @Value("${rabbit.exchange-name}")
     String exchangeName;
+    @Value("${rabbit.routing-key}")
+    private String routingKey;
 
     @Bean
     public Queue messageQueue() {
@@ -29,7 +31,12 @@ public class RabbitmqConfiguration {
     }
 
     @Bean
-    public FanoutExchange deadLetterExchange() {
+    public DirectExchange messageExchange() {
+        return new DirectExchange(exchangeName);
+    }
+
+    @Bean
+    FanoutExchange deadLetterExchange() {
         return new FanoutExchange(exchangeName + ".dlx");
     }
 
@@ -41,6 +48,11 @@ public class RabbitmqConfiguration {
     @Bean
     public Binding deadLetterBinding() {
         return BindingBuilder.bind(deadLetterQueue()).to(deadLetterExchange());
+    }
+
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(messageQueue()).to(messageExchange()).with(routingKey);
     }
 
 
