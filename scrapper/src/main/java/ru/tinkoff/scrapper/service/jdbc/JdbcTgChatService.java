@@ -1,11 +1,10 @@
 package ru.tinkoff.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.jdbc.JdbcTgChatRepository;
+import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.service.TgChatService;
 
-//@Service
 @RequiredArgsConstructor
 public class JdbcTgChatService implements TgChatService {
 

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Link {
-    long id;
+    Long id;
     String link;
     Timestamp lastUpdate;
     String state;

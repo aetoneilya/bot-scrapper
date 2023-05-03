@@ -1,32 +1,23 @@
 package ru.tinkoff.scrapper.service.jooq;
 
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import ru.tinkoff.GitHubLink;
-import ru.tinkoff.StackOverflowLink;
-import ru.tinkoff.UrlParser;
-import ru.tinkoff.scrapper.client.github.GitHubClient;
-import ru.tinkoff.scrapper.client.stackoverflow.StackOverflowClient;
 import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
-import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
+import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
+import ru.tinkoff.scrapper.service.Utilities;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JooqLinkUpdater implements LinkUpdater {
     private final JooqLinkRepository linkRepository;
-    private final GitHubClient gitHubClient;
+    private final Utilities utilities;
     private final TelegramBotClient telegramBotClient;
-    private final StackOverflowClient stackOverflowClient;
-    private final UrlParser urlParser;
-    private final Gson gson;
+
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
 
@@ -36,29 +27,20 @@ public class JooqLinkUpdater implements LinkUpdater {
         List<Link> oldLinks = linkRepository.findOlderThan(updateFrequency);
 
         for (Link link : oldLinks) {
-            updateLink(link);
+            String newState = utilities.getNewState(link);
+            if (!newState.equals(link.getState())) {
+                sendUpdate(link, newState);
+                saveNewState(link, newState);
+            }
         }
 
         return 0;
     }
 
-    private void updateLink(Link link) {
-        String newState = link.getState();
-        switch (urlParser.parse(link.getLink())) {
-            case GitHubLink g -> newState = gson.toJson(gitHubClient.getLastCommit(g.user(), g.repository()));
-            case StackOverflowLink s -> newState = gson.toJson(stackOverflowClient.getStackOverflowResponse(s.id()));
-        }
 
-        if (!link.getState().equals(newState)) {
-            sendUpdateToBot(link, link.getState() + " -> " + newState);
-        }
-        saveNewState(link, newState);
-    }
-
-    private void sendUpdateToBot(Link link, String description) {
-        List<Long> chats = linkRepository.getChatIds(link);
-        UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
-        telegramBotClient.update(request);
+    private void sendUpdate(Link link, String newState) {
+        linkRepository.getChatsIds(link).forEach((x) -> link.getChats().add(new Chat(x, null)));
+        telegramBotClient.sendUpdateToBot(link, newState);
     }
 
     private void saveNewState(Link link, String newState) {

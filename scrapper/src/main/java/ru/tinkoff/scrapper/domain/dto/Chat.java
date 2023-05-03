@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Chat {
-    long id;
+    Long id;
     List<Link> links = new ArrayList<>();
 }

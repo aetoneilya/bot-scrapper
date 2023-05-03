@@ -24,9 +24,9 @@ public class JooqTgChatRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void addFindTest() {
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1, new ArrayList<>()));
-        chats.add(new Chat(2, new ArrayList<>()));
-        chats.add(new Chat(3, new ArrayList<>()));
+        chats.add(new Chat(1L, new ArrayList<>()));
+        chats.add(new Chat(2L, new ArrayList<>()));
+        chats.add(new Chat(3L, new ArrayList<>()));
 
         for (Chat chat : chats) {
             chatRepository.add(chat);
@@ -40,9 +40,9 @@ public class JooqTgChatRepositoryTest extends IntegrationEnvironment {
     @Rollback
     public void addRemoveFindTest() {
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1, new ArrayList<>()));
-        chats.add(new Chat(2, new ArrayList<>()));
-        chats.add(new Chat(3, new ArrayList<>()));
+        chats.add(new Chat(1L, new ArrayList<>()));
+        chats.add(new Chat(2L, new ArrayList<>()));
+        chats.add(new Chat(3L, new ArrayList<>()));
 
         for (Chat chat : chats) {
             chatRepository.add(chat);

@@ -1,12 +1,10 @@
 package ru.tinkoff.scrapper.service.jooq;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.jooq.JooqTgChatRepository;
 import ru.tinkoff.scrapper.service.TgChatService;
 
-@Service
 @RequiredArgsConstructor
 public class JooqTgChatService implements TgChatService {
     private final JooqTgChatRepository repository;

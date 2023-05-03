@@ -12,7 +12,7 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 
 import java.util.List;
 
-//@Repository
+@Repository
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -29,9 +29,10 @@ public class JdbcLinkRepository {
     }
 
     public Link getByUrl(String url) {
-        return jdbcTemplate.queryForObject("select * from links where link = :link",
+        List<Link> links = jdbcTemplate.query("select * from links where link = :link",
                 new MapSqlParameterSource().addValue("link", url),
                 rowMapper);
+        return links.size() > 0 ? links.get(0) : null;
     }
 
     public int update(Link link) {
@@ -74,8 +75,8 @@ public class JdbcLinkRepository {
                         .addValue("linkId", link.getId()));
     }
 
-    public List<Long> getChatIds(Link link) {
-        return jdbcTemplate.query("select chat_id from chats_to_links where link_id = :link_id",
-                new MapSqlParameterSource().addValue("linkId", link.getId()), new DataClassRowMapper<>(Long.class));
+    public List<Chat> getChats(Link link) {
+        return jdbcTemplate.query("select * from chats join chats_to_links ctl on chats.id = ctl.chat_id where link_id = :linkId",
+                new MapSqlParameterSource().addValue("linkId", link.getId()), new DataClassRowMapper<>(Chat.class));
     }
 }

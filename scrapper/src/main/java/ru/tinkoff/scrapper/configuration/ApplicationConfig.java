@@ -12,7 +12,11 @@ import ru.tinkoff.scrapper.scheduler.Scheduler;
 
 @Validated
 @ConfigurationProperties(prefix = "scrapper", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, @NotNull Scheduler scheduler, @NotNull int updateFrequency) {
+public record ApplicationConfig(
+        @NotNull String test,
+        @NotNull Scheduler scheduler,
+        @NotNull int updateFrequency
+        ) {
     @Bean("delay")
     public long getDelay() {
         return scheduler.interval().toMillis();

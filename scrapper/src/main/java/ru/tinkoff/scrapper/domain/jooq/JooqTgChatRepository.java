@@ -15,11 +15,11 @@ public class JooqTgChatRepository {
     private final DSLContext dsl;
 
     public int add(Chat chat) {
-        return dsl.insertInto(CHATS, CHATS.ID).values((int) chat.getId()).onConflictDoNothing().execute();
+        return dsl.insertInto(CHATS, CHATS.ID).values(chat.getId().intValue()).onConflictDoNothing().execute();
     }
 
     public int remove(Chat chat) {
-        return dsl.deleteFrom(CHATS).where(CHATS.ID.equal((int) chat.getId())).execute();
+        return dsl.deleteFrom(CHATS).where(CHATS.ID.equal(chat.getId().intValue())).execute();
     }
 
     public List<Chat> findAll() {
