@@ -11,6 +11,7 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jpa.JpaLinkRepository;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public class JpaLinkRepositoryTest extends IntegrationEnvironment {
         links.add(new Link(4L, "target.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", new ArrayList<>()));
         linkRepository.saveAll(links);
 
-        List<Link> result = linkRepository.findOlderThan(30);
+        List<Link> result = linkRepository.findOlderThan(Duration.ofMinutes(30));
 
         Assertions.assertEquals(links.size(), result.size());
     }

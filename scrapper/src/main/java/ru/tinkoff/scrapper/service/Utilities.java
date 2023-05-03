@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Utilities {
     private final GitHubClient gitHubClient;
-    private final TelegramBotClient telegramBotClient;
     private final StackOverflowClient stackOverflowClient;
     private final UrlParser urlParser;
     private final Gson gson;
@@ -34,12 +33,6 @@ public class Utilities {
         link.setState(getNewState(link));
 
         return link;
-    }
-
-    public void sendUpdateToBot(Link link, String description) {
-        List<Long> chats = link.getChats().stream().map(Chat::getId).collect(Collectors.toList());
-        UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
-        telegramBotClient.update(request);
     }
 
     public String getNewState(@NotNull Link link) {
