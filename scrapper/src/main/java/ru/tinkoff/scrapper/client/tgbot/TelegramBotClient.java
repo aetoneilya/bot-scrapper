@@ -9,6 +9,11 @@ import reactor.core.publisher.Mono;
 import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
 import ru.tinkoff.scrapper.client.tgbot.dto.response.ApiErrorResponse;
 import ru.tinkoff.scrapper.client.tgbot.exception.TgBotClientException;
+import ru.tinkoff.scrapper.domain.dto.Chat;
+import ru.tinkoff.scrapper.domain.dto.Link;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TelegramBotClient {
@@ -17,6 +22,14 @@ public class TelegramBotClient {
     public TelegramBotClient(@Qualifier("tgBotClient") WebClient webClient) {
         this.webClient = webClient;
     }
+
+
+    public void sendUpdateToBot(Link link, String description) {
+        List<Long> chats = link.getChats().stream().map(Chat::getId).collect(Collectors.toList());
+        UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
+        update(request);
+    }
+
 
     public void update(UpdatesRequest updatesRequest) {
         webClient.post().uri("/updates")

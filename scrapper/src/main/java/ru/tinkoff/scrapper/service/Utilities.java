@@ -9,10 +9,10 @@ import ru.tinkoff.StackOverflowLink;
 import ru.tinkoff.UrlParser;
 import ru.tinkoff.scrapper.client.github.GitHubClient;
 import ru.tinkoff.scrapper.client.stackoverflow.StackOverflowClient;
+import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
 import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
-import ru.tinkoff.scrapper.service.updatesender.UpdateSender;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,7 +25,6 @@ public class Utilities {
     private final StackOverflowClient stackOverflowClient;
     private final UrlParser urlParser;
     private final Gson gson;
-    private final UpdateSender sender;
 
     public Link createLink(String url) {
         Link link = new Link();
@@ -34,12 +33,6 @@ public class Utilities {
         link.setState(getNewState(link));
 
         return link;
-    }
-
-    public void sendUpdateToBot(Link link, String description) {
-        List<Long> chats = link.getChats().stream().map(Chat::getId).collect(Collectors.toList());
-        UpdatesRequest request = new UpdatesRequest(link.getId(), link.getLink(), description, chats);
-        sender.send(request);
     }
 
     public String getNewState(@NotNull Link link) {
