@@ -15,8 +15,8 @@ import ru.tinkoff.scrapper.scheduler.Scheduler;
 public record ApplicationConfig(
         @NotNull String test,
         @NotNull Scheduler scheduler,
-        @NotNull int updateFrequency
-        ) {
+        @NotNull int updateFrequency,
+        @NotNull AccessType accessType) {
     @Bean("delay")
     public long getDelay() {
         return scheduler.interval().toMillis();
