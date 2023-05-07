@@ -3,6 +3,7 @@ package ru.tinkoff.scrapper.configuration.domain;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
 import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
 import ru.tinkoff.scrapper.domain.jooq.JooqTgChatRepository;
 import ru.tinkoff.scrapper.service.LinkService;
@@ -27,7 +28,7 @@ public class JooqAccessConfiguration {
     }
 
     @Bean
-    public LinkUpdater linkUpdater(JooqLinkRepository linkRepository, Utilities utilities) {
-        return new JooqLinkUpdater(linkRepository, utilities);
+    public LinkUpdater linkUpdater(JooqLinkRepository linkRepository, Utilities utilities, TelegramBotClient telegramBotClient) {
+        return new JooqLinkUpdater(linkRepository, utilities, telegramBotClient);
     }
 }

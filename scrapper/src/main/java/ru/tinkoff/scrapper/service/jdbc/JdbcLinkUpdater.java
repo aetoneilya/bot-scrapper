@@ -2,6 +2,7 @@ package ru.tinkoff.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
 import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
@@ -15,6 +16,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
 
     private final JdbcLinkRepository linkRepository;
     private final Utilities utilities;
+    private final TelegramBotClient telegramBotClient;
 
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
@@ -37,7 +39,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
 
     private void sendUpdate(Link link, String newState) {
         link.setChats(linkRepository.getChats(link));
-        utilities.sendUpdateToBot(link, newState);
+        telegramBotClient.sendUpdateToBot(link, newState);
     }
 
     private void saveNewState(Link link, String newState) {
