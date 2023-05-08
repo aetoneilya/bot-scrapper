@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -f scrapper/Dockerfile -t ghcr.io/${{ github.repository }}/scrapper:latest .
+        run: cd scrapper && docker build -f Dockerfile -t ghcr.io/${{ github.repository }}/scrapper:latest .
 
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/${{ github.repository }}/scrapper:latest
