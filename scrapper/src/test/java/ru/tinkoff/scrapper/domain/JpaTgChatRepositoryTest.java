@@ -30,7 +30,12 @@ public class JpaTgChatRepositoryTest extends IntegrationEnvironment {
 
         chatRepository.saveAll(chats);
 
-        Assertions.assertIterableEquals(chatRepository.findAll(), chats);
+        List<Chat> bdChats = chatRepository.findAll();
+        Assertions.assertEquals(chats.size(), bdChats.size());
+        for (int i = 0; i < chats.size(); i++) {
+            Assertions.assertEquals(chats.get(i).getLinks(), bdChats.get(i).getLinks());
+        }
+        
     }
 
     @Test

@@ -1,0 +1,34 @@
+name: build-scrapper
+
+on:
+  push:
+    paths:
+      - '.github/workflows/scrapper.yml'
+      - 'link-parser/**'
+      - 'scrapper/**'
+      - 'scrapper-jooq/**'
+      - 'docker/migrations/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup JDK 19
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+          cache: maven
+      - name: Docker compose up
+        run: docker-compose -f 'docker/docker-compose.yml' up -d
+      - name: Maven package jar scrapper-jooq
+        run: mvn package -pl scrapper-jooq -am
+      - name: Java execute jar scrapper-jooq
+        run: java -jar scrapper-jooq/target/scrapper-jooq-1.0-SNAPSHOT.jar
+      - name: Maven package jar scrapper
+        run: mvn package -pl scrapper -am
