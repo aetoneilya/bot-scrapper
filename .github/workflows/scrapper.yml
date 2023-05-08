@@ -28,7 +28,5 @@ jobs:
         run: docker-compose -f 'docker/docker-compose.yml' up -d
       - name: Maven package jar scrapper-jooq
         run: mvn package -pl scrapper-jooq -am
-      - name: log
-        run: docker ps
       - name: Java run scrapper-jooq
         run: mvn -pl scrapper-jooq clean compile exec:java
