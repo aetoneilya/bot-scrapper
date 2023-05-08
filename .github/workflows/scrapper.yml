@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       packages: write
     steps:
       - name: Checkout
@@ -28,7 +28,5 @@ jobs:
         run: docker-compose -f 'docker/docker-compose.yml' up -d
       - name: Maven package jar scrapper-jooq
         run: mvn package -pl scrapper-jooq -am
-      - name: Java execute jar scrapper-jooq
-        run: java -jar scrapper-jooq/target/scrapper-jooq-1.0-SNAPSHOT-jar-with-dependencies.jar
-      - name: Maven package jar scrapper
-        run: mvn package -pl scrapper -am
+      - name: Java run scrapper-jooq
+        run: mvn -pl scrapper-jooq clean compile exec:java
