@@ -32,6 +32,9 @@ jobs:
       - name: Java run scrapper-jooq
         run: mvn -pl scrapper-jooq clean compile exec:java
 
+      - name: Maven package jar scrapper
+        run: mvn package -pl scrapper -am
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
