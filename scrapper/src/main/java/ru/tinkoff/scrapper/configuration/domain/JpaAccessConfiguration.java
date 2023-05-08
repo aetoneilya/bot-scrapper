@@ -18,7 +18,11 @@ import ru.tinkoff.scrapper.service.jpa.JpaTgChatService;
 @ConditionalOnProperty(prefix = "scrapper", name = "access-type", havingValue = "jpa")
 public class JpaAccessConfiguration {
     @Bean
-    public LinkService linkService(JpaLinkRepository linkRepository, JpaTgChatRepository chatRepository, Utilities utilities) {
+    public LinkService linkService(
+        JpaLinkRepository linkRepository,
+        JpaTgChatRepository chatRepository,
+        Utilities utilities
+    ) {
         return new JpaLinkService(chatRepository, linkRepository, utilities);
     }
 
@@ -28,7 +32,11 @@ public class JpaAccessConfiguration {
     }
 
     @Bean
-    public LinkUpdater linkUpdater(JpaLinkRepository linkRepository, Utilities utilities, TelegramBotClient telegramBotClient) {
+    public LinkUpdater linkUpdater(
+        JpaLinkRepository linkRepository,
+        Utilities utilities,
+        TelegramBotClient telegramBotClient
+    ) {
         return new JpaLinkUpdater(linkRepository, utilities, telegramBotClient);
     }
 }

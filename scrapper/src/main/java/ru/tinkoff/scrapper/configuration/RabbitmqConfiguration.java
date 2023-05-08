@@ -1,6 +1,11 @@
 package ru.tinkoff.scrapper.configuration;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,13 +20,14 @@ public class RabbitmqConfiguration {
     private String exchangeName;
     @Value("${rabbit.routing-key}")
     private String routingKey;
+    private final String deadQueueExchangeName = exchangeName + ".dlx";
 
     @Bean
     public Queue messageQueue() {
         return QueueBuilder
-                .durable(queueName)
-                .withArgument("x-dead-letter-exchange", exchangeName + ".dlx")
-                .build();
+            .durable(queueName)
+            .withArgument("x-dead-letter-exchange", deadQueueExchangeName)
+            .build();
     }
 
     @Bean
@@ -31,7 +37,7 @@ public class RabbitmqConfiguration {
 
     @Bean
     FanoutExchange deadLetterExchange() {
-        return new FanoutExchange(exchangeName + ".dlx");
+        return new FanoutExchange(deadQueueExchangeName);
     }
 
     @Bean

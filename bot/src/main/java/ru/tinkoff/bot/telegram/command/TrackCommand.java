@@ -38,8 +38,9 @@ public class TrackCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        if (isReply(update))
+        if (isReply(update)) {
             return handeReply(update);
+        }
         return new SendMessage(update.message().chat().id(), REPLY_TO_TEXT).replyMarkup(new ForceReply());
     }
 

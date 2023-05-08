@@ -1,5 +1,8 @@
 package ru.tinkoff.scrapper.service.jpa;
 
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
@@ -7,10 +10,6 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jpa.JpaLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
 import ru.tinkoff.scrapper.service.Utilities;
-
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JpaLinkUpdater implements LinkUpdater {
@@ -20,6 +19,7 @@ public class JpaLinkUpdater implements LinkUpdater {
 
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
+
     @Override
     public int update() {
         List<Link> oldLinks = linkRepository.findOlderThan(Duration.ofMinutes(updateFrequency));

@@ -28,7 +28,11 @@ public class JooqAccessConfiguration {
     }
 
     @Bean
-    public LinkUpdater linkUpdater(JooqLinkRepository linkRepository, Utilities utilities, TelegramBotClient telegramBotClient) {
+    public LinkUpdater linkUpdater(
+        JooqLinkRepository linkRepository,
+        Utilities utilities,
+        TelegramBotClient telegramBotClient
+    ) {
         return new JooqLinkUpdater(linkRepository, utilities, telegramBotClient);
     }
 }

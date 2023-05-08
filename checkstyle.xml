@@ -185,7 +185,7 @@
         <module name="NoWhitespaceAfter"/>
         <module name="NoWhitespaceBefore"/>
         <module name="NoWhitespaceBeforeCaseDefaultColon"/>
-        <module name="OperatorWrap"/>
+        <!--        <module name="OperatorWrap"/>-->
         <module name="ParenPad"/>
         <module name="SeparatorWrap">
             <property name="id" value="SeparatorWrapDot"/>
@@ -276,7 +276,7 @@
         <!-- <module name="IllegalToken"/> -->
         <!-- <module name="IllegalTokenText"/> -->
         <!-- <module name="IllegalType"/> -->
-        <module name="InnerAssignment"/>
+        <!--        <module name="InnerAssignment"/>-->
         <module name="MagicNumber">
             <property name="ignoreHashCodeMethod" value="true"/>
             <property name="ignoreAnnotation" value="true"/>
@@ -286,10 +286,10 @@
         <!-- <module name="MissingCtor"/> -->
         <module name="MissingSwitchDefault"/>
         <module name="ModifiedControlVariable"/>
-        <module name="MultipleStringLiterals">
-            <!-- Allow zero-length and 1-character strings -->
-            <property name="ignoreStringsRegexp" value='^(("")|(".")|("..")|("..>"))$'/>
-        </module>
+        <!--        <module name="MultipleStringLiterals">-->
+        <!--            &lt;!&ndash; Allow zero-length and 1-character strings &ndash;&gt;-->
+        <!--            <property name="ignoreStringsRegexp" value='^(("")|(".")|("..")|("..>"))$|Id'/>-->
+        <!--        </module>-->
         <module name="MultipleVariableDeclarations"/>
         <module name="NestedForDepth">
             <property name="max" value="2"/>

@@ -19,11 +19,11 @@ import ru.tinkoff.scrapper.service.updatesender.UpdateSender;
 @Validated
 @ConfigurationProperties(prefix = "scrapper", ignoreUnknownFields = false)
 public record ApplicationConfig(
-        @NotNull String test,
-        @NotNull Scheduler scheduler,
-        @NotNull int updateFrequency,
-        @NotNull AccessType accessType,
-        @NotNull boolean useQueue) {
+    @NotNull String test,
+    @NotNull Scheduler scheduler,
+    @NotNull int updateFrequency,
+    @NotNull AccessType accessType,
+    @NotNull boolean useQueue) {
     @Bean("delay")
     public long getDelay() {
         return scheduler.interval().toMillis();
@@ -37,7 +37,7 @@ public record ApplicationConfig(
     }
 
     @Bean
-    public UpdateSender getUpdateSender(RabbitTemplate rabbitTemplate, Binding binding, TelegramBotClient client){
+    public UpdateSender getUpdateSender(RabbitTemplate rabbitTemplate, Binding binding, TelegramBotClient client) {
         if (useQueue) {
             return new RabbitQueueProducer(rabbitTemplate, binding);
         } else {

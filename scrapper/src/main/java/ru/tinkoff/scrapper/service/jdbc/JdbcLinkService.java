@@ -1,5 +1,7 @@
 package ru.tinkoff.scrapper.service.jdbc;
 
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.scrapper.domain.dto.Chat;
@@ -7,9 +9,6 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.scrapper.service.LinkService;
 import ru.tinkoff.scrapper.service.Utilities;
-
-import java.net.URI;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
