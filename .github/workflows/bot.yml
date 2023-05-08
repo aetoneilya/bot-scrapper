@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Check style scrapper and link parser
-        run: mvn -pl boy -am checkstyle:check
+        run: mvn -pl bot -am checkstyle:check
 
   build:
     runs-on: ubuntu-latest
