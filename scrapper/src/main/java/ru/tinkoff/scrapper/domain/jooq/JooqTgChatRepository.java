@@ -7,7 +7,7 @@ import ru.tinkoff.scrapper.domain.dto.Chat;
 
 import java.util.List;
 
-import static ru.tinkoff.scrapper.domain.jooq.tables.Chats.CHATS;
+import static ru.tinkoff.scrapper.domain.jooq.generated.tables.Chats.CHATS;
 
 @Repository
 @RequiredArgsConstructor

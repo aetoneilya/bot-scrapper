@@ -8,7 +8,7 @@ import org.jooq.types.DayToSecond;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
-import ru.tinkoff.scrapper.domain.jooq.tables.records.LinksRecord;
+import ru.tinkoff.scrapper.domain.jooq.generated.tables.records.LinksRecord;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -17,8 +17,8 @@ import java.util.List;
 
 import static org.jooq.impl.DSL.currentLocalDateTime;
 import static org.jooq.impl.DSL.localDateTimeAdd;
-import static ru.tinkoff.scrapper.domain.jooq.Tables.CHATS_TO_LINKS;
-import static ru.tinkoff.scrapper.domain.jooq.tables.Links.LINKS;
+import static ru.tinkoff.scrapper.domain.jooq.generated.Tables.CHATS_TO_LINKS;
+import static ru.tinkoff.scrapper.domain.jooq.generated.tables.Links.LINKS;
 
 
 @Repository
