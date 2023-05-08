@@ -29,6 +29,6 @@ jobs:
       - name: Maven package jar scrapper-jooq
         run: mvn package -pl scrapper-jooq -am
       - name: Java execute jar scrapper-jooq
-        run: java -jar scrapper-jooq/target/scrapper-jooq-1.0-SNAPSHOT.jar
+        run: java -jar scrapper-jooq/target/scrapper-jooq-1.0-SNAPSHOT-spring-boot.jar
       - name: Maven package jar scrapper
         run: mvn package -pl scrapper -am
