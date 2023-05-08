@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 
 public class StackOverflowUrlParser extends BaseUrlParser {
     private static final String HOST = "stackoverflow.com";
-    private static final Pattern regex = Pattern.compile("^/questions/(\\d+)/.*$");
+    private static final Pattern REGEX = Pattern.compile("^/questions/(\\d+)/.*$");
 
     @Override
     public UrlParserResponse parseUri(URI uri) {
         if (uri.getHost().equals(HOST)) {
-            Matcher matcher = regex.matcher(uri.getPath());
+            Matcher matcher = REGEX.matcher(uri.getPath());
             return matcher.matches() ? new StackOverflowLink(Long.parseLong(matcher.group(1))) : null;
         } else {
             return  super.parseUri(uri);
