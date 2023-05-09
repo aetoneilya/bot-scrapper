@@ -1,4 +1,4 @@
-package ru.tinkoff.scrapper.configuration;
+package ru.tinkoff.scrapper.configuration.domain;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

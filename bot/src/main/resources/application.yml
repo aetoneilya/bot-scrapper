@@ -6,6 +6,11 @@ bot:
 server:
   port: 8081
 
+rabbit:
+  queue-name: "update-notify-queue"
+  exchange-name: "update-notify-exchange"
+  routing-key: "update_request"
+
 springdoc:
   api-docs:
     enabled: true
@@ -13,3 +18,13 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui
+
+spring:
+  rabbitmq:
+    host: localhost
+    username: user
+    password: password
+    port: 5672
+    listener:
+      simple:
+        default-requeue-rejected: false

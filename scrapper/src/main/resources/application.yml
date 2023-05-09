@@ -3,10 +3,17 @@ scrapper:
   scheduler:
     interval: 50000
   update-frequency: 30
-  access-type: jdbc
+  access-type: jpa
+  use-queue: true
 
 server:
   port: 8082
+
+rabbit:
+  queue-name: "update-notify-queue"
+  exchange-name: "update-notify-exchange"
+  routing-key: "update_request"
+
 
 clients:
   base-url:
@@ -20,6 +27,12 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: UNSPECIFIED
+    open-in-view: false
+
   liquibase:
     enabled: false
 
@@ -27,6 +40,15 @@ spring:
     url: ${DB_URL}
     password: ${DB_PASSWORD}
     username: ${DB_USERNAME}
+
+  rabbitmq:
+    host: localhost
+    username: user
+    password: password
+    port: 5672
+    listener:
+      simple:
+        default-requeue-rejected: false
 
 springdoc:
   api-docs:
