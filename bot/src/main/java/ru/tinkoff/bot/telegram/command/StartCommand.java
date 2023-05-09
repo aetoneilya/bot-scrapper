@@ -33,7 +33,6 @@ public class StartCommand implements Command {
         } catch (ScrapperClientException ex) {
             replyMessage = ex.getMessage();
         } catch (RuntimeException ex) {
-            System.out.println(ex.getMessage());
             replyMessage = "@#!@$ I'm broken!?> This is don't supposed to happen";
         }
 

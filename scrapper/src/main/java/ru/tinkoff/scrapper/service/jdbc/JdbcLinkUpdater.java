@@ -1,5 +1,7 @@
 package ru.tinkoff.scrapper.service.jdbc;
 
+import java.sql.Timestamp;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
@@ -7,9 +9,6 @@ import ru.tinkoff.scrapper.domain.dto.Link;
 import ru.tinkoff.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
 import ru.tinkoff.scrapper.service.Utilities;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JdbcLinkUpdater implements LinkUpdater {
@@ -20,7 +19,6 @@ public class JdbcLinkUpdater implements LinkUpdater {
 
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
-
 
     @Override
     public int update() {

@@ -28,7 +28,11 @@ public class JdbcAccessConfiguration {
     }
 
     @Bean
-    public LinkUpdater linkUpdater(JdbcLinkRepository jdbcLinkRepository, Utilities utilities, TelegramBotClient telegramBotClient) {
+    public LinkUpdater linkUpdater(
+        JdbcLinkRepository jdbcLinkRepository,
+        Utilities utilities,
+        TelegramBotClient telegramBotClient
+    ) {
         return new JdbcLinkUpdater(jdbcLinkRepository, utilities, telegramBotClient);
     }
 }

@@ -1,13 +1,11 @@
 package ru.tinkoff.scrapper.domain.jooq;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.scrapper.domain.dto.Chat;
-
-import java.util.List;
-
-import static ru.tinkoff.scrapper.domain.jooq.tables.Chats.CHATS;
+import static ru.tinkoff.scrapper.domain.jooq.generated.tables.Chats.CHATS;
 
 @Repository
 @RequiredArgsConstructor

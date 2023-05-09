@@ -37,11 +37,14 @@ public class ListCommand implements Command {
             return new SendMessage(chatId, "Something went wrong..");
         }
 
-        if (response.size() == 0) return new SendMessage(chatId, "No tracked links yet..\nFeel free to add some");
+        if (response.size() == 0) {
+            return new SendMessage(chatId, "No tracked links yet..\nFeel free to add some");
+        }
 
         StringBuilder sendMessageText = new StringBuilder("Tracked links:");
-        for (LinkResponse linkResponse : response.links())
+        for (LinkResponse linkResponse : response.links()) {
             sendMessageText.append("\n").append(linkResponse.url().toString());
+        }
 
         return new SendMessage(chatId, sendMessageText.toString());
     }

@@ -29,9 +29,10 @@ public abstract class IntegrationEnvironment {
         runMigrations(DB_CONTAINER);
     }
 
+
     private static void runMigrations(JdbcDatabaseContainer<?> c) {
         var changelogPath = new File(".").toPath().toAbsolutePath()
-                .getParent().getParent().resolve("migration").resolve("migrations");
+                .getParent().getParent().resolve("docker").resolve("migrations");
 
         try (var conn = DriverManager.getConnection(c.getJdbcUrl(), c.getUsername(), c.getPassword())) {
             var changelogDir = new DirectoryResourceAccessor(changelogPath);

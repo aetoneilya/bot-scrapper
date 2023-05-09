@@ -12,8 +12,9 @@ import ru.tinkoff.bot.client.scrapper.exception.ScrapperClientException;
 @Component
 @RequiredArgsConstructor
 public class UntrackCommand implements Command {
-    private final ScrapperClient scrapperClient;
     private static final String REPLY_TO_TEXT = "Send link as reply to this message to remove it from tracked links";
+    private final ScrapperClient scrapperClient;
+
     @Override
     public String command() {
         return "/untrack";
@@ -31,8 +32,9 @@ public class UntrackCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        if (isReply(update))
+        if (isReply(update)) {
             return handeReply(update);
+        }
         return new SendMessage(update.message().chat().id(), REPLY_TO_TEXT).replyMarkup(new ForceReply());
     }
 

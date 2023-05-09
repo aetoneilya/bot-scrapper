@@ -25,7 +25,8 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     //TODO: sequences dont rollback in tests
     public void insertFindTest() {
         List<Link> links = new ArrayList<>();
-        links.add(new Link(1L, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", new ArrayList<>()));
+        links.add(new Link(null, "stackoferflow.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", new ArrayList<>()));
+        links.add(new Link(null, "github.com", Timestamp.valueOf("2001-12-12 12:12:00"), "{\"answerCount\":29}", new ArrayList<>()));
 
         for (Link l : links) {
             linkRepository.add(l);
@@ -34,7 +35,9 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         List<Link> bdLinks = linkRepository.findAll();
         Assertions.assertEquals(links.size(), bdLinks.size());
         for (int i = 0; i < links.size(); i++) {
-            Assertions.assertEquals(links.get(i), bdLinks.get(i));
+            Assertions.assertEquals(links.get(i).getLink(), bdLinks.get(i).getLink());
+            Assertions.assertEquals(links.get(i).getState(), bdLinks.get(i).getState());
+            Assertions.assertEquals(links.get(i).getChats(), bdLinks.get(i).getChats());
         }
     }
 

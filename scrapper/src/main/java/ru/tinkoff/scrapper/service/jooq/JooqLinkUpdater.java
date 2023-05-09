@@ -1,5 +1,7 @@
 package ru.tinkoff.scrapper.service.jooq;
 
+import java.sql.Timestamp;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
@@ -9,9 +11,6 @@ import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
 import ru.tinkoff.scrapper.service.LinkUpdater;
 import ru.tinkoff.scrapper.service.Utilities;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 @RequiredArgsConstructor
 public class JooqLinkUpdater implements LinkUpdater {
     private final JooqLinkRepository linkRepository;
@@ -20,7 +19,6 @@ public class JooqLinkUpdater implements LinkUpdater {
 
     @Value("${scrapper.update-frequency}")
     int updateFrequency;
-
 
     @Override
     public int update() {
@@ -36,7 +34,6 @@ public class JooqLinkUpdater implements LinkUpdater {
 
         return 0;
     }
-
 
     private void sendUpdate(Link link, String newState) {
         linkRepository.getChatsIds(link).forEach((x) -> link.getChats().add(new Chat(x, null)));

@@ -1,5 +1,7 @@
 package ru.tinkoff.scrapper.service.jooq;
 
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
@@ -7,13 +9,11 @@ import ru.tinkoff.scrapper.domain.jooq.JooqLinkRepository;
 import ru.tinkoff.scrapper.service.LinkService;
 import ru.tinkoff.scrapper.service.Utilities;
 
-import java.net.URI;
-import java.util.List;
-
 @RequiredArgsConstructor
 public class JooqLinkService implements LinkService {
     private final JooqLinkRepository repository;
     private final Utilities utilities;
+
     @Override
     public Link add(long tgChatId, URI url) {
         Link link = utilities.createLink(url.toString());

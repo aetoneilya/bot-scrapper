@@ -2,6 +2,7 @@ package ru.tinkoff.scrapper.service;
 
 import com.google.gson.Gson;
 import jakarta.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.GitHubLink;
@@ -9,14 +10,7 @@ import ru.tinkoff.StackOverflowLink;
 import ru.tinkoff.UrlParser;
 import ru.tinkoff.scrapper.client.github.GitHubClient;
 import ru.tinkoff.scrapper.client.stackoverflow.StackOverflowClient;
-import ru.tinkoff.scrapper.client.tgbot.TelegramBotClient;
-import ru.tinkoff.scrapper.client.tgbot.dto.request.UpdatesRequest;
-import ru.tinkoff.scrapper.domain.dto.Chat;
 import ru.tinkoff.scrapper.domain.dto.Link;
-
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +37,5 @@ public class Utilities {
         }
         return newState;
     }
-
 
 }
