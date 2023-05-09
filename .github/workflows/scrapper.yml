@@ -24,7 +24,7 @@ jobs:
           java-version: '19'
           cache: maven
 
-      - name: Check style scrapper and link parser
+      - name: Check style for scrapper and link parser
         run: mvn -pl scrapper -am checkstyle:check
 
       - name: Check style scrapper-jooq
@@ -48,7 +48,7 @@ jobs:
           java-version: '19'
           cache: maven
 
-      - name: Docker compose up
+      - name: Run services
         run: docker-compose -f 'docker/docker-compose.yml' up -d
 
       - name: Java run scrapper-jooq
@@ -64,7 +64,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build image
         run: cd scrapper && docker build -f Dockerfile -t ghcr.io/${{ github.repository }}/scrapper:latest .
 
       - name: Push Docker image to GitHub Container Registry

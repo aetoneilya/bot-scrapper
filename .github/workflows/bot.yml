@@ -21,7 +21,7 @@ jobs:
           java-version: '19'
           cache: maven
 
-      - name: Check style scrapper and link parser
+      - name: Bot check style
         run: mvn -pl bot -am checkstyle:check
 
   build:
@@ -52,7 +52,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build image
         run: cd bot && docker build -f Dockerfile -t ghcr.io/${{ github.repository }}/bot:latest .
 
       - name: Push Docker image to GitHub Container Registry
