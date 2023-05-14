@@ -1,0 +1,71 @@
+name: build-scrapper
+
+on:
+  push:
+    paths:
+      - '.github/workflows/scrapper.yml'
+      - 'link-parser/**'
+      - 'scrapper/**'
+      - 'scrapper-jooq/**'
+      - 'docker/migrations/**'
+
+jobs:
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 19
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+          cache: maven
+
+      - name: Check style for scrapper and link parser
+        run: mvn -pl scrapper -am checkstyle:check
+
+      - name: Check style scrapper-jooq
+        run: mvn -pl scrapper-jooq -am checkstyle:check
+
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 19
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+          cache: maven
+
+      - name: Run services
+        run: docker-compose -f 'docker/docker-compose.yml' up -d
+
+      - name: Java run scrapper-jooq
+        run: mvn -pl scrapper-jooq clean compile exec:java
+
+      - name: Maven package jar scrapper
+        run: mvn package -pl scrapper -am
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        run: cd scrapper && docker build -f Dockerfile -t ghcr.io/${{ github.repository }}/scrapper:latest .
+
+      - name: Push Docker image to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.repository }}/scrapper:latest
