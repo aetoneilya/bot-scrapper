@@ -32,6 +32,8 @@ spring:
           sharedCache:
             mode: UNSPECIFIED
     open-in-view: false
+  application:
+    name: scrapper
 
   liquibase:
     enabled: false
@@ -57,3 +59,24 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui
+
+management:
+  server:
+    port: 8083
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: info,health,prometheus
+      path-mapping:
+        prometheus: metrics
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
+    tags:
+      application: '${spring.application.name}'

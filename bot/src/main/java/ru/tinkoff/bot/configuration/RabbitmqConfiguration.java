@@ -20,17 +20,18 @@ import ru.tinkoff.bot.controller.dto.request.UpdatesRequest;
 @Configuration
 public class RabbitmqConfiguration {
     @Value("${rabbit.queue-name}")
-    String queueName;
+    private String queueName;
     @Value("${rabbit.exchange-name}")
-    String exchangeName;
+    private String exchangeName;
     @Value("${rabbit.routing-key}")
     private String routingKey;
+    private final String deadQueueExchangeName = exchangeName + ".dlx";
 
     @Bean
     public Queue messageQueue() {
         return QueueBuilder
             .durable(queueName)
-            .withArgument("x-dead-letter-exchange", exchangeName + ".dlx")
+            .withArgument("x-dead-letter-exchange", deadQueueExchangeName)
             .build();
     }
 
@@ -41,7 +42,7 @@ public class RabbitmqConfiguration {
 
     @Bean
     FanoutExchange deadLetterExchange() {
-        return new FanoutExchange(exchangeName + ".dlx");
+        return new FanoutExchange(deadQueueExchangeName);
     }
 
     @Bean

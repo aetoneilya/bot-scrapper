@@ -9,6 +9,7 @@ import com.pengrad.telegrambot.request.SetMyCommands;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.tinkoff.bot.metric.MessageCounter;
 import ru.tinkoff.bot.telegram.command.Command;
 
 @Service
@@ -16,6 +17,7 @@ import ru.tinkoff.bot.telegram.command.Command;
 public class Bot {
     private final TelegramBot bot;
     private final List<Command> commands;
+    private final MessageCounter messageCounter;
 
     public void start() {
         BotCommand[] menuCommand = new BotCommand[commands.size()];
@@ -23,9 +25,11 @@ public class Bot {
             menuCommand[i] = commands.get(i).toApiCommand();
         }
         bot.execute(new SetMyCommands(menuCommand));
+
         bot.setUpdatesListener(updates -> {
             for (Update update : updates) {
                 bot.execute(processUpdate(update));
+                messageCounter.increment();
             }
 
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
